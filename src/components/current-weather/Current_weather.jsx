@@ -1,43 +1,42 @@
 /* eslint-disable react/prop-types */
-import "./Current_weather.css";
-
 export default function Current_weather({ data }) {
   return (
-    <div className="weather">
-      <div className="top">
+    <div className="max-w-xs mx-auto p-6 bg-gray-900 text-white rounded-lg shadow-2xl border border-gray-700">
+      <div className="flex justify-between items-center mb-4">
         <div>
-          <p className="city">{data.city}</p>
-          <p className="weather-description">{data.weather[0].description}</p>
+          <p className="text-2xl font-bold">{data.city}</p>
+          <p className="text-sm font-light mt-1">
+            {data.weather[0].description}
+          </p>
         </div>
         <img
           alt="weather"
-          className="weather-icon"
+          className="w-20 h-20 filter invert brightness-100"
           src={`icons/${data.weather[0].icon}.png`}
         />
       </div>
-      <div className="bottom">
-        <p className="temperature">{Math.round(data.main.temp)}°C</p>
-        <div className="details">
-          <div className="parameter-row">
-            <span className="parameter-label">Details</span>
-          </div>
-          <div className="parameter-row">
-            <span className="parameter-label">Feels Like</span>
-            <span className="parameter-value">
+      <div>
+        <p className="text-6xl font-extrabold">
+          {Math.round(data.main.temp)}°C
+        </p>
+        <div className="mt-4 space-y-3 text-sm">
+          <div className="flex justify-between">
+            <span className="font-light">Feels Like</span>
+            <span className="font-semibold">
               {Math.round(data.main.feels_like)}°C
             </span>
           </div>
-          <div className="parameter-row">
-            <span className="parameter-label">Wind</span>
-            <span className="parameter-value">{data.wind.speed} m/s</span>
+          <div className="flex justify-between">
+            <span className="font-light">Wind</span>
+            <span className="font-semibold">{data.wind.speed} m/s</span>
           </div>
-          <div className="parameter-row">
-            <span className="parameter-label">Humidity</span>
-            <span className="parameter-value">{data.main.humidity}%</span>
+          <div className="flex justify-between">
+            <span className="font-light">Humidity</span>
+            <span className="font-semibold">{data.main.humidity}%</span>
           </div>
-          <div className="parameter-row">
-            <span className="parameter-label">Pressure</span>
-            <span className="parameter-value">{data.main.pressure} Pha</span>
+          <div className="flex justify-between">
+            <span className="font-light">Pressure</span>
+            <span className="font-semibold">{data.main.pressure} hPa</span>
           </div>
         </div>
       </div>
