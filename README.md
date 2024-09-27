@@ -16,7 +16,7 @@ A visually stunning weather application built with **React** and styled using **
 
 ## Features
 - **Current Weather**: Get real-time weather data, including temperature, humidity, and wind speed for any location.
-- **7-Day Forecast**: Displays detailed weather forecasts with 'feels like' temperature, wind direction, and more.
+- **5-Day Forecast**: Displays detailed weather forecasts with 'feels like' temperature, wind direction, and more.
 - **Responsive Design**: Works flawlessly on both desktop and mobile devices.
 - **Dark Mode Support**: Fully responsive dark mode to enhance usability in low-light conditions.
 - **Dynamic Icons and UI Elements**: Visual elements change based on weather conditions.
