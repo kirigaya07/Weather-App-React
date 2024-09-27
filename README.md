@@ -1,6 +1,6 @@
 # Weather App 🌤️
 
-A visually stunning weather application built with **React** and styled using **Tailwind CSS**. It provides current weather data and a 7-day forecast for any location worldwide, fetched from a weather API. The app supports dark mode for a seamless user experience across different environments.
+A visually stunning weather application built with **React** and styled using **Tailwind CSS**. It provides current weather data and a 5-day forecast for any location worldwide, fetched from a weather API. The app supports dark mode for a seamless user experience across different environments.
 
 ### 🌐 [Live Demo](https://weather-app-react-two-azure.vercel.app/)
 
