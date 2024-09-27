@@ -70,6 +70,19 @@ function App() {
             </select>
           </div>
 
+          {/* Placeholder message with an image if no search has been made */}
+          {!currentWeather && !forecast && (
+            <div className="text-center text-gray-400 text-lg mt-10">
+              <img
+                src="/image.png"
+                alt="Search icon"
+                className="mx-auto mb-5 w-25 h-25"
+              />
+              Please search for a location in the search bar to get the current
+              weather and forecast.
+            </div>
+          )}
+
           <div className="mb-10">
             {currentWeather && <Current_weather data={currentWeather} />}
           </div>
