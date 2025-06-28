@@ -1,14 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
-import { WEATHER_API_KEY, WEATHER_API_URL } from "./components/Api";
+import {
+  WEATHER_API_KEY,
+  WEATHER_API_URL,
+  AIR_QUALITY_API_URL,
+} from "./components/Api";
 import Current_weather from "./components/current-weather/Current_weather";
 import Search from "./components/search/Search";
 import Forecast from "./components/forecast/Forecast";
+import { Toaster, toast } from "react-hot-toast";
+import WeatherMap from "./components/WeatherMap";
 
 function App() {
   const [currentWeather, setCurrentWeather] = useState(null);
   const [forecast, setForecast] = useState(null);
   const [daysCount, setDaysCount] = useState(5);
+  const [airQuality, setAirQuality] = useState(null);
 
   const handleOnSearchChange = (searchData) => {
     const [lat, lon] = searchData.value.split(" ");
@@ -21,23 +28,37 @@ function App() {
       `${WEATHER_API_URL}/forecast?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=metric`
     );
 
-    Promise.all([currentWeatherFetch, forecastFetch])
+    const airQualityFetch = fetch(
+      `${AIR_QUALITY_API_URL}?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}`
+    );
+
+    Promise.all([currentWeatherFetch, forecastFetch, airQualityFetch])
       .then(async (response) => {
         const weatherResponse = await response[0].json();
         const forecastResponse = await response[1].json();
+        const airQualityResponse = await response[2].json();
 
         setCurrentWeather({ city: searchData.label, ...weatherResponse });
         setForecast({ city: searchData.label, ...forecastResponse });
+        setAirQuality(airQualityResponse);
       })
       .catch((error) => {
         console.log(error);
         setCurrentWeather(null);
         setForecast(null);
+        setAirQuality(null);
       });
   };
 
+  useEffect(() => {
+    if (airQuality?.list?.[0]?.main?.aqi >= 4) {
+      toast.error("Warning: Air quality is poor in this location.");
+    }
+  }, [airQuality]);
+
   return (
     <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
+      <Toaster position="top-right" />
       {/* The main app container */}
       <div className="container mx-auto max-w-[1080px] my-5 p-5 bg-gray-800 text-white rounded-lg shadow-lg">
         <div className="text-center mb-8">
@@ -84,11 +105,22 @@ function App() {
           )}
 
           <div className="mb-10">
-            {currentWeather && <Current_weather data={currentWeather} />}
+            {currentWeather && (
+              <Current_weather data={currentWeather} airQuality={airQuality} />
+            )}
           </div>
           <div className="mt-5">
             {forecast && <Forecast data={forecast} daysCount={daysCount} />}
           </div>
+          {currentWeather && (
+            <div className="mt-10">
+              <WeatherMap
+                lat={currentWeather.coord.lat}
+                lon={currentWeather.coord.lon}
+                city={currentWeather.city}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
